@@ -1,0 +1,97 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>Editar categorias</ion-title>
+        <ion-buttons slot="start">
+            <ion-menu-button menu="main-menu"></ion-menu-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <!-- boton superior agregar categorias (reemplazado por fab button) -->
+    <!--  <ion-button id="open-modal" expand="block" color="success" size="default">
+        Nueva categoria
+        <ion-icon slot="end" name="add-circle-outline"></ion-icon>
+    </ion-button> -->
+
+
+    <h1> Categorias Disponibles</h1>
+
+    <ion-list>
+        <!-- obtencion y muestra de categorias disponibles -->
+
+        <ion-item-sliding *ngFor="let item of categories">
+            <ion-item>
+                <ion-label>{{item.name}}</ion-label>
+            </ion-item>
+            <ion-item-options>
+                <ion-item-option color="warning" (click)="editarModal(true, item.id, item.name)">
+                    <ion-icon slot="start" name="cog-outline"></ion-icon>
+                    Editar
+                </ion-item-option>
+                <ion-item-option color="danger" (click)="eliminarCat(item.id, item.name)">
+                    <ion-icon slot="start" name="cog-outline"></ion-icon>
+                    Eliminar
+                </ion-item-option>
+            </ion-item-options>
+        </ion-item-sliding>
+
+    </ion-list>
+
+    <!-- modal para crear categorias -->
+    <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)">
+        <ng-template>
+            <ion-header>
+                <ion-toolbar>
+                    <ion-buttons slot="start">
+                        <ion-button (click)="cancel()">Cancelar</ion-button>
+                    </ion-buttons>
+
+                    <ion-buttons slot="end">
+                        <ion-button (click)="confirm()" [strong]="true">Aceptar</ion-button>
+                    </ion-buttons>
+                </ion-toolbar>
+            </ion-header>
+            <ion-content class="ion-padding">
+                <ion-item>
+                    <ion-input type="text" placeholder="Nombre Categoria" [(ngModel)]="name"></ion-input>
+                </ion-item>
+            </ion-content>
+        </ng-template>
+    </ion-modal>
+
+    <!-- modal para editar categorias -->
+    <ion-modal [isOpen]="isModalOpen" (willDismiss)="onWillDismiss($event)">
+        <ng-template>
+            <ion-header>
+                <ion-toolbar>
+                    <ion-buttons slot="start">
+                        <ion-button (click)="cancelar()">Cancelar</ion-button>
+                    </ion-buttons>
+
+                    <ion-buttons slot="end">
+                        <ion-button (click)="confirmar()" [strong]="true">Aceptar</ion-button>
+                    </ion-buttons>
+                </ion-toolbar>
+            </ion-header>
+            <ion-content class="ion-padding">
+
+                <ion-item>
+                    <h2>Ingrese nuevo nombre:
+                        <ion-input type="text" [(ngModel)]="nuevaCat" placeholder={{nombreCategoria}}></ion-input>
+                    </h2>
+                </ion-item>
+
+            </ion-content>
+        </ng-template>
+    </ion-modal>
+
+    <!-- Boton flotante para despliege de modal para crear una nueva categoria -->
+
+    <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+        <ion-fab-button id="open-modal" expand="block" color="success">
+            <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+
+    </ion-fab>
+</ion-content>

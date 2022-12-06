@@ -1,0 +1,38 @@
+#Row_titulo {
+    
+    border: solid 1px rgb(0, 0, 0);
+    color: rgb(0, 0, 0);
+    text-align: center;
+    font-weight: bold;
+
+  }
+  ion-checkbox {
+    --size: 16px;
+    --background-checked: #6815ec;
+  }
+  
+  ion-checkbox::part(container) {
+    border-radius: 3px;
+    border: 2px solid #6815ec;
+  }
+
+  ion-item-sliding{width:100%}
+
+  ion-card{
+    width: 100%;
+  }
+
+  ion-item-option{
+    font-size: medium;
+    margin-left: 8px;
+    margin-right: 5px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    border-radius: 10px;
+
+
+  }
+
+  #nombre_tarea{
+    text-align: right;
+}

@@ -1,0 +1,144 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>Tabla con Tareas</ion-title>
+        <ion-buttons slot="start">
+            <ion-menu-button menu="main-menu"></ion-menu-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <!-- Selector de Tareas por estado -->
+    <ion-item>
+        <ion-list>
+            <ion-item>
+                <ion-title> Seleccione las Tareas: </ion-title>
+                <ion-select [(ngModel)]="modoVisualizador" [value]="modoVisualizador" #C (ionChange)="selectorFiltro(C.value)">
+                    <ion-select-option value="todas">todas</ion-select-option>
+                    <ion-select-option value="pendiente">pendientes</ion-select-option>
+                    <ion-select-option value="completada">completadas</ion-select-option>
+                </ion-select>
+            </ion-item>
+        </ion-list>
+    </ion-item>
+
+    <ion-item>
+        <ion-list>
+            <ion-item>
+                <ion-title> Seleccione las Categorias: </ion-title>
+                <ion-select [(ngModel)]="modoVisualizadorCategorias" [value]="modoVisualizadorCategorias" #Cat (ionChange)="selectorFiltroCategorias(Cat.value)">
+                    <ion-select-option value="todas">todas</ion-select-option>
+                    <ion-item *ngFor="let item of categories">
+                        <ion-select-option value={{item.name}}>{{item.name}}</ion-select-option>
+                    </ion-item>
+
+                </ion-select>
+
+            </ion-item>
+        </ion-list>
+    </ion-item>
+
+    <!-- Obtencion de Tareas generales -->
+    <ion-list>
+
+        <ion-item-sliding *ngFor="let tareas of listaTareas">
+            <ion-item>
+
+                <ion-card id="card" [color]="tareas.status ==='pendiente' ? 'warning' : 'success'">
+                    <ion-card-header>
+                        <ion-card-title>Titulo: {{tareas.task_name}}</ion-card-title>
+                        <ion-card-subtitle>Inicio: {{tareas.date_start | date: 'dd-MM-yyyy' }}</ion-card-subtitle>
+                        <ion-card-subtitle>Termino: {{tareas.date_end | date: 'dd-MM-yyyy'}}</ion-card-subtitle>
+                        <ion-card-subtitle>Categoria: {{tareas.name}}</ion-card-subtitle>
+                        <ion-card-subtitle>Estado: {{tareas.status}}</ion-card-subtitle>
+                    </ion-card-header>
+                </ion-card>
+            </ion-item>
+
+            <ion-item-options>
+                <ion-item-option color="warning" (click)="editarTarea(true, tareas.id, tareas.task_name, tareas.date_start, tareas.date_end, tareas.id_category,tareas.status)">
+                    <ion-icon slot="start" name="cog-outline"></ion-icon>
+                    Editar
+                </ion-item-option>
+                <ion-item-option color="danger" (click)="eliminarTarea(tareas.id, tareas.task_name)">
+                    <ion-icon slot="start" name="cog-outline"></ion-icon>
+                    Eliminar
+                </ion-item-option>
+            </ion-item-options>
+
+        </ion-item-sliding>
+    </ion-list>
+
+
+    <!-- modal de edicion para Tareas -->
+
+    <ion-modal [isOpen]="isModalOpen">
+        <ng-template>
+            <ion-header>
+                <ion-toolbar>
+                    <ion-buttons slot="start">
+                        <ion-button (click)="cancelar()">Cancelar</ion-button>
+                    </ion-buttons>
+
+                    <ion-buttons slot="end">
+                        <ion-button (click)="confirmar()" [strong]="true">Aceptar</ion-button>
+                    </ion-buttons>
+                </ion-toolbar>
+            </ion-header>
+
+            <!-- contenido de modal  para editar Tareas-->
+            <ion-content class="ion-padding">
+
+                <ion-item>
+                    <ion-label>Fecha inicio</ion-label>
+                    <ion-datetime-button datetime="datetime"></ion-datetime-button>
+                    <ion-modal [keepContentsMounted]="true">
+                        <ng-template>
+                            <ion-datetime id="datetime" locale="es-ES" presentation="date" display-format="YYYY MMMM DD" [ngModel]="fecha_inicio.toISOString()" [showDefaultButtons]="true" doneText="Confirmar" cancelText="Cancelar" (ionChange)="cambioFecha1($event)"></ion-datetime>
+                        </ng-template>
+                    </ion-modal>
+                </ion-item>
+
+                <ion-item>
+                    <ion-label>Fecha Termino</ion-label>
+                    <ion-datetime-button datetime="datetime2"></ion-datetime-button>
+                    <ion-modal [keepContentsMounted]="true">
+                        <ng-template>
+                            <ion-datetime id="datetime2" locale="es-ES" presentation="date" display-format="YYYY MMMM DD" [ngModel]="fecha_termino.toISOString()" [showDefaultButtons]="true" doneText="Confirmar" cancelText="Cancelar" (ionChange)="cambioFecha2($event)"></ion-datetime>
+                        </ng-template>
+                    </ion-modal>
+                </ion-item>
+
+                <ion-item id="nombre_tarea">
+                    <ion-label>Nombre de tarea:</ion-label>
+                    <ion-input id="nombre_tarea" [(ngModel)]="nombreTarea" [value]="nombreTarea"></ion-input>
+                </ion-item>
+
+                <ion-list>
+                    <ion-item>
+                        <ion-label>Categoria:</ion-label>
+                        <ion-select [(ngModel)]="valCat" [value]="valCat">
+                            <ion-item *ngFor="let item of categories">
+                                <ion-select-option value={{item.id}}>{{item.name}}</ion-select-option>
+                            </ion-item>
+                        </ion-select>
+                    </ion-item>
+                </ion-list>
+
+                <ion-list>
+                    <ion-item>
+                        <ion-label>Estado:</ion-label>
+
+                        <ion-select [(ngModel)]="estado" [value]="estado">
+                            <ion-select-option value="completada">completada</ion-select-option>
+                            <ion-select-option value="pendiente">pendiente</ion-select-option>
+
+                        </ion-select>
+                    </ion-item>
+                </ion-list>
+
+            </ion-content>
+        </ng-template>
+    </ion-modal>
+
+</ion-content>

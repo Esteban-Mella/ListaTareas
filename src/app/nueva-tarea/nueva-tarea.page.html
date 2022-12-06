@@ -1,0 +1,56 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>NuevaTarea</ion-title>
+        <ion-buttons slot="start">
+            <ion-menu-button menu="main-menu"></ion-menu-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+    <ion-item>
+        <ion-label>Fecha inicio</ion-label>
+        <ion-input #I value="{{ fecha_inicio | date: 'dd-MM-yyyy' }}" id="fecha_inicio" class="ion-text-end" (ionChange)="fechaIn(I.value)"></ion-input>
+        <ion-popover trigger="fecha_inicio" size="cover">
+            <ng-template>
+                <ion-datetime locale="es-ES" [showDefaultButtons]="true" presentation="date" [(ngModel)]="fecha_inicio" locale="sl-SI" doneText="Confirmar" cancelText="Cancelar"></ion-datetime>
+            </ng-template>
+        </ion-popover>
+    </ion-item>
+
+    <ion-item>
+        <ion-label>Fecha Termino</ion-label>
+        <ion-input #T value="{{ fecha_termino | date: 'dd-MM-yyyy' }}" id="fecha_termino" class="ion-text-end" (ionChange)="fechaTe(T.value)"></ion-input>
+
+        <ion-popover trigger="fecha_termino" size="cover">
+            <ng-template>
+                <ion-datetime locale="es-ES" [showDefaultButtons]="true" presentation="date" [(ngModel)]="fecha_termino" locale="sl-SI" doneText="Confirmar" cancelText="Cancelar"></ion-datetime>
+            </ng-template>
+        </ion-popover>
+    </ion-item>
+
+
+
+    <ion-item id="nombre_tarea">
+        <ion-label>Nombre de tarea:</ion-label>
+        <ion-input id="nombre_tarea" [(ngModel)]="nombreCategoria" placeholder="Ingrese un nombre"></ion-input>
+    </ion-item>
+
+    <ion-list>
+        <ion-item>
+            <ion-label>Categoria:</ion-label>
+            <ion-select [(ngModel)]="valor_cat" [value]="valor_cat" #C (ionChange)="valores(C.value)">
+                <ion-item *ngFor="let item of categories">
+                    <ion-select-option value={{item.id}}>{{item.name}}</ion-select-option>
+                </ion-item>
+
+            </ion-select>
+        </ion-item>
+    </ion-list>
+
+
+</ion-content>
+<ion-footer class="ion-no-border">
+    <ion-button size="large" id="boton_aceptar" expand="block" color="success" size="default" (click)="nuevaTarea()">Aceptar</ion-button>
+</ion-footer>
