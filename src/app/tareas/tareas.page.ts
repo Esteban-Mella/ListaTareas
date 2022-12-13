@@ -22,7 +22,7 @@ export class TareasPage implements OnInit {
   nombreCategoria!: string;
   valor_cat!: number;
   estado!: string;
-  fecha_inicial!: string;
+
 
   fechaI!: string;
   fechaT!: string;
@@ -81,7 +81,7 @@ export class TareasPage implements OnInit {
 
   }
   cambioFecha1(event: any){
-    this.fecha_inicial = event.detail.value;
+    this.fecha_inicio = event.detail.value;
 
   }
 

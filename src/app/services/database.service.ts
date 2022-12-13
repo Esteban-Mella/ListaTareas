@@ -114,6 +114,7 @@ export class DatabaseService {
         this.sqlFiltro =`WHERE ${this.tables.tasks}.status = '${filtro}' AND ${this.tables.categories}.name='${filtroCat}'
         ORDER BY task_name ASC`;
       }
+      
     this.sql =`SELECT ${this.tables.tasks}.id, ${this.tables.tasks}.task_name, ${this.tables.tasks}.date_start, ${this.tables.tasks}.date_end, ${this.tables.tasks}.status, ${this.tables.categories}.name, ${this.tables.tasks}.id_category  FROM tasks 
     INNER JOIN category
     ON ${this.tables.categories}.id = ${this.tables.tasks}.id_category `+this.sqlFiltro;

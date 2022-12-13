@@ -23,6 +23,7 @@ export class NuevaTareaPage implements OnInit {
   }
 
   ionViewDidEnter(){
+      this.vaciarcampos();
       this.getCategory();
   }
 
@@ -86,8 +87,11 @@ export class NuevaTareaPage implements OnInit {
       Swal.mixin({heightAuto: false,
       }).fire('Error, verifique los datos!', '', 'warning');
     }
-    
+    this.vaciarcampos();
 
+  }
+
+  vaciarcampos(){
     this.nombreCategoria="";
     this.valor_cat=0;
     this.fecha_inicio="";
