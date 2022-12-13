@@ -30,10 +30,7 @@ export class ConfigCategoriasPage implements OnInit {
   constructor(private database: DatabaseService) { } 
   
   ngOnInit() {
-    this.database.createDataBase().then(()=>{
-      this.getCategory();
-    });
-    
+      this.getCategory(); 
   }
 
   cancel() {
