@@ -96,28 +96,35 @@ export class DatabaseService {
   }
 
   async getTask(filtro:string, filtroCat:string){
-    console.log("ARPT2"+filtroCat);
+    if(filtro!="todas" && filtroCat==="todas"){
+      this.sql =`SELECT ${this.tables.tasks}.id, ${this.tables.tasks}.task_name, ${this.tables.tasks}.date_start, ${this.tables.tasks}.date_end, ${this.tables.tasks}.status, ${this.tables.categories}.name, ${this.tables.tasks}.id_category  FROM tasks 
+      INNER JOIN category
+      ON ${this.tables.categories}.id = ${this.tables.tasks}.id_category
+      WHERE ${this.tables.tasks}.status='${filtro}'
+      ORDER BY task_name ASC`;
+    }
     if(filtro==="todas" && filtroCat==="todas"){
       this.sql =`SELECT ${this.tables.tasks}.id, ${this.tables.tasks}.task_name, ${this.tables.tasks}.date_start, ${this.tables.tasks}.date_end, ${this.tables.tasks}.status, ${this.tables.categories}.name, ${this.tables.tasks}.id_category  FROM tasks 
       INNER JOIN category
       ON ${this.tables.categories}.id = ${this.tables.tasks}.id_category
       ORDER BY task_name ASC`;
-    }else{
-      if(filtro==="todas" && filtroCat!="todas"){
+    }
+    
+    if(filtro==="todas" && filtroCat!="todas"){
         this.sql =`SELECT ${this.tables.tasks}.id, ${this.tables.tasks}.task_name, ${this.tables.tasks}.date_start, ${this.tables.tasks}.date_end, ${this.tables.tasks}.status, ${this.tables.categories}.name, ${this.tables.tasks}.id_category  FROM tasks 
       INNER JOIN category
       ON ${this.tables.categories}.id = ${this.tables.tasks}.id_category WHERE ${this.tables.categories}.name='${filtroCat}'
       ORDER BY task_name ASC`;
-      }else if (filtro!="todas" && filtroCat!="todas"){
+    }
+    if (filtro!="todas" && filtroCat!="todas"){
         console.log("ARPT"+filtroCat);
         this.sql =`SELECT ${this.tables.tasks}.id, ${this.tables.tasks}.task_name, ${this.tables.tasks}.date_start, ${this.tables.tasks}.date_end, ${this.tables.tasks}.status, ${this.tables.categories}.name, ${this.tables.tasks}.id_category  FROM tasks 
         INNER JOIN category
         ON ${this.tables.categories}.id = ${this.tables.tasks}.id_category WHERE ${this.tables.tasks}.status = '${filtro}' AND ${this.tables.categories}.name='${filtroCat}'
         ORDER BY task_name ASC`;
       }
-      
 
-    }
+    
 
     return this.databaseObj.executeSql(this.sql, []).then((res) => {
       return res;
@@ -132,7 +139,7 @@ export class DatabaseService {
     date_start = '${dateStart}',
     date_end = '${dateEnd}',
     status = '${status}',
-    id_category = ${id_category}
+    id_category = '${id_category}'
     WHERE id = ${id}`, []).then(() => {
       return "Tarea Actualizada";
     }).catch((e) => {

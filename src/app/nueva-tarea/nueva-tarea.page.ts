@@ -23,9 +23,7 @@ export class NuevaTareaPage implements OnInit {
   }
 
   ionViewDidEnter(){
-    this.database.createDataBase().then(()=>{
       this.getCategory();
-    });
   }
 
   private dateValue_inicio: any;

@@ -104,7 +104,7 @@
                     <ion-datetime-button datetime="datetime2"></ion-datetime-button>
                     <ion-modal [keepContentsMounted]="true">
                         <ng-template>
-                            <ion-datetime id="datetime2" locale="es-ES" presentation="date" display-format="YYYY MMMM DD" [ngModel]="fecha_termino.toISOString()" [showDefaultButtons]="true" doneText="Confirmar" cancelText="Cancelar" (ionChange)="cambioFecha2($event)"></ion-datetime>
+                            <ion-datetime id="datetime2" locale="es-ES" presentation="date" display-format="YYYY MMMM DD" [ngModel]="fecha_termino" [showDefaultButtons]="true" doneText="Confirmar" cancelText="Cancelar" (ionChange)="cambioFecha2($event)"></ion-datetime>
                         </ng-template>
                     </ion-modal>
                 </ion-item>

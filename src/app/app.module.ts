@@ -12,6 +12,7 @@ import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/n
 
 import { SQLite, SQLiteObject } from '@awesome-cordova-plugins/sqlite/ngx';
 
+
 @NgModule({
   declarations: [AppComponent],
   imports: [HttpClientModule,NgxDatatableModule,BrowserModule, IonicModule.forRoot(), AppRoutingModule],

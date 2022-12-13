@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/ngx';
+import { DatabaseService } from './services/database.service';
 
 
 @Component({
@@ -9,8 +10,10 @@ import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/n
 })
 export class AppComponent {
 
-  constructor(private screenOrientation: ScreenOrientation) {
-   
+  constructor(private screenOrientation: ScreenOrientation,private database: DatabaseService) {
+
+    this.database.createDataBase();
     this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
+    
   }
 }

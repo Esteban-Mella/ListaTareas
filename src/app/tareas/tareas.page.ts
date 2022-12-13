@@ -38,17 +38,14 @@ export class TareasPage implements OnInit {
   ngOnInit() {
     this.modoVisualizador="todas";
     this.modoVisualizadorCategorias="todas";
-    this.database.createDataBase().then(()=>{
       this.getCategory();
-    });
-    
+
   }
 
   ionViewDidEnter(){
-    this.database.createDataBase().then(()=>{
-      this.getTask();
-      this.getCategory();
-    });
+    this.getTask();
+    this.getCategory();
+
     
   }
 
@@ -76,8 +73,8 @@ export class TareasPage implements OnInit {
     this.id_tarea=id;
     this.isModalOpen=isOpen;
     this.nombreTarea=nombre;
-    this.fecha_inicio =  new Date(fecha_inicio);
-    this.fecha_termino = new Date(fecha_termino);
+    this.fecha_inicio =  new Date(fecha_inicio).toISOString();
+    this.fecha_termino = new Date(fecha_termino).toISOString();
     this.valCat=categoria+"";
     this.id_cat=categoria;
     this.estado=estado;
@@ -100,8 +97,8 @@ export class TareasPage implements OnInit {
   confirmar(){
     //name: string, id: number, dateStart: Date, dateEnd: Date, status: string, id_category: number
 
-    if(this.nombreTarea!='' && this.id_tarea!=null && this.fecha_inicio!=null &&  this.fecha_termino!=null && this.estado!="" && this.valCat!= ""){
-
+    if(this.nombreTarea!='' && this.id_tarea!=null && this.fecha_inicio!=null &&  this.fecha_termino!=null && this.estado!="" && this.valCat!= null){
+      this.id_cat=Number(this.valCat);
       this.database.updateTask(this.nombreTarea, this.id_tarea, this.fecha_inicio,  this.fecha_termino, this.estado, this.id_cat).then((respuesta)=>{
         if(respuesta==="Tarea Actualizada"){
           Swal.mixin({heightAuto: false,
