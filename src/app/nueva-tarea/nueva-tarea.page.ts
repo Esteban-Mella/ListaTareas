@@ -76,7 +76,7 @@ export class NuevaTareaPage implements OnInit {
       this.database.addTask(this.nombreCategoria,this.fecha_inicio,this.fecha_termino,"pendiente",this.valor_cat).then((data) => {
         if(data==="Tarea Creada"){
           Swal.mixin({heightAuto: false,
-          }).fire('Categoria creada!', '', 'success');
+          }).fire('Tarea Creada!', '', 'success');
           
         }else{
           Swal.mixin({heightAuto: false,
