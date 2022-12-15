@@ -103,7 +103,6 @@ export class ConfigCategoriasPage implements OnInit {
 
     Swal.fire({
       title: 'Esta seguro de eliminar: '+name+' ',
-      text: 'Se eliminaran las tareas asociadas!',
       showDenyButton: true,
       confirmButtonText: 'Aceptar',
       denyButtonText: `Cancelar`,
@@ -112,13 +111,22 @@ export class ConfigCategoriasPage implements OnInit {
     }).then((result) => {
       
       if (result.isConfirmed) {
-        this.database.deleteCategory(id).then((respuesta)=>{
-          Swal.mixin({heightAuto: false,
-          }).fire('Categoria eliminada!', '', 'success');
-   
-          this.getCategory();
-          
+        this.database.VerificarCategoriaTareas(id).then((respuesta)=>{
+          if(respuesta.rows.item(0).cuenta>=1){
+            Swal.mixin({heightAuto: false,
+            }).fire('Error!: '+ respuesta.rows.item(0).cuenta + ' Tarea/s con esta categoria asignada!!', '', 'error');
+            
+          }else{
+            this.database.deleteCategory(id).then((respuesta)=>{
+              Swal.mixin({heightAuto: false,
+              }).fire('Categoria eliminada!', '', 'success');
+              this.getCategory();
+
+            });
+          }
         });
+        
+        
         
       }
     });

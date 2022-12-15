@@ -152,4 +152,12 @@ export class DatabaseService {
       return "Error al eliminar Tarea " + JSON.stringify(e);
     });
   }
+
+  async VerificarCategoriaTareas(id: number){
+    return this.databaseObj.executeSql(`SELECT count(id_category) as cuenta FROM ${this.tables.tasks} WHERE id_category=${id}`, []).then((res) => {
+      return res;
+    }).catch((e) => {
+      return "Error" + JSON.stringify(e);
+    });
+  }
 }
